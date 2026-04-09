@@ -34,11 +34,6 @@ backend.addOutput({
         name: customBucketName,
         bucket_name: customBucketName,
         aws_region: "us-east-1",
-        paths: {
-          "/*": {
-                   authenticated: ["get", "list", "write", "delete"],
-          },
-        },
       },
     ],
   },
