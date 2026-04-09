@@ -36,7 +36,7 @@ backend.addOutput({
         aws_region: "us-east-1",
         //@ts-expect-error amplify backend type issue https://github.com/aws-amplify/amplify-backend/issues/2569
         paths: {
-          "/*": {
+          "*": {
             groupsadmin: ["get", "list", "write", "delete"],
             authenticated: ["get", "list", "write", "delete"],
           },
@@ -55,16 +55,12 @@ const unauthPolicy = new Policy(backend.stack, "customBucketUnauthPolicy", {
     new PolicyStatement({
       effect: Effect.ALLOW,
       actions: ["s3:GetObject"],
-      resources: [`arn:aws:s3:::${customBucketName}/public/*`],
+      resources: [`arn:aws:s3:::${customBucketName}/*`],
     }),
     new PolicyStatement({
       effect: Effect.ALLOW,
       actions: ["s3:ListBucket"],
       resources: [`arn:aws:s3:::${customBucketName}`],
-      conditions: {
-        StringLike: {
-          "s3:prefix": ["public/*", "public/"],
-        },
       },
     }),
   ],
@@ -89,11 +85,7 @@ const authPolicy = new Policy(backend.stack, "customBucketAuthPolicy", {
       resources: [
         `arn:aws:s3:::${customBucketName}`,
         `arn:aws:s3:::${customBucketName}/*`,
-      ],
-      conditions: {
-        StringLike: {
-          "s3:prefix": ["/*", "/"],
-        },
+      ]
       },
     }),
   ],
@@ -116,12 +108,7 @@ const adminPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
       resources: [
         `arn:aws:s3:::${customBucketName}`,
         `arn:aws:s3:::${customBucketName}/*`,
-      ],
-      conditions: {
-        StringLike: {
-          "s3:prefix": ["admin/*", "admin/"],
-        },
-      },
+      ]
     }),
   ],
 });
