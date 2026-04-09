@@ -36,7 +36,7 @@ backend.addOutput({
         aws_region: "us-east-1",
         //@ts-expect-error amplify backend type issue https://github.com/aws-amplify/amplify-backend/issues/2569
         paths: {
-          "*": {
+          "/": {
             groupsadmin: ["get", "list", "write", "delete"],
             authenticated: ["get", "list", "write", "delete"],
           },
@@ -61,7 +61,6 @@ const unauthPolicy = new Policy(backend.stack, "customBucketUnauthPolicy", {
       effect: Effect.ALLOW,
       actions: ["s3:ListBucket"],
       resources: [`arn:aws:s3:::${customBucketName}`],
-      },
     }),
   ],
 });
@@ -85,8 +84,7 @@ const authPolicy = new Policy(backend.stack, "customBucketAuthPolicy", {
       resources: [
         `arn:aws:s3:::${customBucketName}`,
         `arn:aws:s3:::${customBucketName}/*`,
-      ]
-      },
+      ],
     }),
   ],
 });
@@ -108,7 +106,7 @@ const adminPolicy = new Policy(backend.stack, "customBucketAdminPolicy", {
       resources: [
         `arn:aws:s3:::${customBucketName}`,
         `arn:aws:s3:::${customBucketName}/*`,
-      ]
+      ],
     }),
   ],
 });
