@@ -29,13 +29,6 @@ backend.addOutput({
   storage: {
     aws_region: "us-east-1",
     bucket_name: customBucketName,
-    buckets: [
-      {
-        name: customBucketName,
-        bucket_name: customBucketName,
-        aws_region: "us-east-1",
-      },
-    ],
   },
 });
 
